@@ -77,7 +77,7 @@ pipeline {
                         throw e
                     } finally {
                         // generate cucumber reports in both Test Pass/Fail scenario
-                        bat "cd $WORKSPACE/test/integration && cp reports.json $WORKSPACE"
+                        sh "cd $WORKSPACE/test/integration && cp reports.json $WORKSPACE"
                         cucumber fileIncludePattern: 'reports.json'
                         build job: 'cucumber-report'
                     }
