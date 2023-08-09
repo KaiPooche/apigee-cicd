@@ -12,7 +12,7 @@ pipeline {
 
     environment {
         //getting the current stable/deployed revision...this is used in undeloy.sh in case of failure...
-        stable_revision = sh(script: 'curl -H "Authorization: Bearer ya29.a0AfB_byAA_8mhOHEV50gA77bDH2sdjvdsOrOYFTsMyOnSG3XML92_ZVAQgcyN7gwQfuX8c9-gfjcTKDFBBK9AjzksXy7F4CGBImpNRwJL5zQ5-IT3nzpxegMvVOv-o_-Yx1DnAh_UirFYfbUwwTHgth8nYziHlZstsKmwG6gxb2I_MMUlKj8-LqZzjCNXIgQcO4g295AhyeOw-ebcFuOCYRde-DaN1Mz4MwbWUWUtPrZSgOlPoPpBg6UWACe6HSpgAyNsn4enD1OeYqni0NZmmDR9Wp3aoKp-6NtjluD9JQnMpC05FOy2rJ94EYzW8cg0YZFC11n51-PuNMoBtWCgfIExyr6-sVlWtP0vu4FSZBadezUK78i1MxJ3V9ufJ4qBFo2Uau-PLLuHh7FQ4aEqPS4aCgYKAckSARMSFQHsvYlsPbIRCfehNn18fayovd4SCQ0414" "https://apigee.googleapis.com/v1/organizations/inductive-cocoa-390420/apis/HR-API/deployments" | jq -r ".environment[0].revision[0].name"', returnStdout: true).trim()
+        stable_revision = sh(script: 'curl -H "Authorization: Bearer ya29.a0AfB_byAA_8mhOHEV50gA77bDH2sdjvdsOrOYFTsMyOnSG3XML92_ZVAQgcyN7gwQfuX8c9-gfjcTKDFBBK9AjzksXy7F4CGBImpNRwJL5zQ5-IT3nzpxegMvVOv-o_-Yx1DnAh_UirFYfbUwwTHgth8nYziHlZstsKmwG6gxb2I_MMUlKj8-LqZzjCNXIgQcO4g295AhyeOw-ebcFuOCYRde-DaN1Mz4MwbWUWUtPrZSgOlPoPpBg6UWACe6HSpgAyNsn4enD1OeYqni0NZmmDR9Wp3aoKp-6NtjluD9JQnMpC05FOy2rJ94EYzW8cg0YZFC11n51-PuNMoBtWCgfIExyr6-sVlWtP0vu4FSZBadezUK78i1MxJ3V9ufJ4qBFo2Uau-PLLuHh7FQ4aEqPS4aCgYKAckSARMSFQHsvYlsPbIRCfehNn18fayovd4SCQ0414" "https://apigee.googleapis.com/v1/organizations/inductive-cocoa-390420/apis/common-template/deployments" | jq -r ".environment[0].revision[0].name"', returnStdout: true).trim()
     }
 
     stages {
