@@ -18,7 +18,7 @@ pipeline {
     stages {
         stage('Initial-Checks') {
             steps {
-                sendNotifications 'STARTED'
+                //sendNotifications 'STARTED'
                 sh "npm -v"
                 sh "mvn -v"
                 echo "$apigeeUsername"
