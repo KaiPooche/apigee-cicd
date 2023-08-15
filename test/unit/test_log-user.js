@@ -2,19 +2,19 @@ var expect = require('expect.js');
 var sinon = require('sinon');
 
 // this is the javascript file that is under test
-var jsFile = '../../HR-API/apiproxy/resources/jsc/Logging-User-Setting-ID.js';
+var jsFile = '../../hr-api/apiproxy/resources/jsc/Logging-User-Setting-ID.js';
 
 
-GLOBAL.context = {
+global.context = {
 	getVariable: function(s) {},
 	setVariable: function(s) {}
 };
 
-GLOBAL.httpClient = {
+global.httpClient = {
 	send: function(s) {}
 };
 
-GLOBAL.Request = function(s) {};
+global.Request = function(s) {};
 
 var contextGetVariableMethod, contextSetVariableMethod;
 var httpClientSendMethod;
