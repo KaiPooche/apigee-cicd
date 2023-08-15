@@ -24,8 +24,8 @@ pipeline {
                  echo "$JAVA_HOME"
                 sh "npm -v"
                 sh "mvn -v"
-                echo "$apigeeUsername"
-                echo "Stable Revision: ${env.stable_revision}"
+               //echo "$apigeeUsername"
+                //echo "Stable Revision: ${env.stable_revision}"
         }}  
         stage('Policy-Code Analysis') {
             steps {
