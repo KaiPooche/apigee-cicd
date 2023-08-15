@@ -19,6 +19,9 @@ pipeline {
         stage('Initial-Checks') {
             steps {
                 //sendNotifications 'STARTED'
+
+                echo "using new config"
+                 echo "$JAVA_HOME"
                 sh "npm -v"
                 sh "mvn -v"
                 echo "$apigeeUsername"
