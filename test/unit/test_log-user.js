@@ -25,7 +25,7 @@ var requestConstructor;
 beforeEach(function () {
 	contextGetVariableMethod = sinon.stub(context, 'getVariable');
 	contextSetVariableMethod = sinon.stub(context, 'setVariable');
-	requestConstructor = sinon.spy(GLOBAL, 'Request');
+	requestConstructor = sinon.spy(global, 'Request');
 	httpClientSendMethod = sinon.stub(httpClient, 'send');
 });
 
