@@ -62,7 +62,7 @@ pipeline {
                  
                  // deploy only proxy and deploy both proxy and config based on edge.js update
                 //bat "sh && sh deploy.sh"
-                sh "mvn -f HR-API/pom.xml install -Pprod -Dusername=${apigeeUsername} -Dpassword=${apigeePassword} -Dapigee.config.options=update"
+                sh "mvn -f hr-api/pom.xml install -Pprod  -Dbearer=ya29.a0AfB_byCP7orPXT6BKg5eVY73b3kQ1eH5AbOlJdufeUwQO2fptPBXRW33QH21cZZ6nqqRiqbLjXiWw8gywVe8tJapkc29tLULte7qyFkF5kQvpbhqsFQfOaGDYkMZ79RmXYYTv47EOSsq_V9G3omyI09CsQx6GNcDKcjZOgyny-MUeOwoFYMMb5ekvV4ef7d12Yasyl6qpmg7em4EFNFx9Lle6nffHpLu_ARxE3M_-cYfcSkHrBvgvARY495jrJcWWudp644YNavv4LiuQr4vIU-jRS6mId7NnIw4KXbqBKlPe4SV9Oh2oHNzDncaKvVADiUx-1fNuvp56QPv5ED9AtHaQ2lHbvB6IGIqBU9feHl2SkuJjauXccP_nJb-3VE5OLxJTorGMNfAu_Os0b7Bo6EaCgYKAegSARMSFQHsvYls7MFr_3e02_9hFdI1igw-3A0414 -Dapigee.config.options=update"
             }
         }
         stage('Integration Tests') {
