@@ -29,16 +29,13 @@ jobs:
     steps:
     # Runs a single command using the runners shell
     
-    - name: Setup node
-      uses: actions/setup-node@v3
-      with:
-        node-version: 16.13.x
-        cache: npm
+    
+  
 
 
-    - name: Setup Java 
-      uses: actions/setup-java@v3
+     
+    - uses: actions/setup-java@v3
       with:
           distribution: 'corretto' # See 'Supported distributions' for available options
           java-version: '11'
-    - run: java HelloWorldApp.java
+    - run: java -v
