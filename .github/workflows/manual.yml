@@ -28,6 +28,17 @@ jobs:
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
     # Runs a single command using the runners shell
-    - name: Send greeting
-      # run: echo "Hello ${{ inputs.name }}"
-      run: echo "mvn -v"
+    
+    - name: Setup node
+      uses: actions/setup-node@v3
+      with:
+        node-version: 16.13.x
+        cache: npm
+
+
+    - name: Setup Java 
+      uses: actions/setup-java@v3
+      with:
+          distribution: 'corretto' # See 'Supported distributions' for available options
+          java-version: '11'
+    - run: java HelloWorldApp.java
