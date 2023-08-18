@@ -43,5 +43,6 @@ jobs:
     - run: java -version
     - run: npm install -g apigeelint
     - run: apigeelint -s  /home/runner/work/apigee-cicd/apigee-cicd/hr-api/apiproxy -f codeframe.js
+    - run: npm install
     - run: npm test /home/runner/work/apigee-cicd/apigee-cicd/test/unit/*.js
     - run: npm run coverage /home/runner/work/apigee-cicd/apigee-cicd/test/unit/*.js
