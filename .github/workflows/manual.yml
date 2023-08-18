@@ -38,4 +38,9 @@ jobs:
       with:
           distribution: 'corretto' # See 'Supported distributions' for available options
           java-version: '11'
+    - uses: actions/setup-node@v3
+      with:
+        node-version: '14'    
     - run: java -version
+    - run: npm install -g apigeelint
+    - run: apigeelint -s hr-api/apiproxy/ -f codeframe.js
