@@ -43,4 +43,4 @@ jobs:
         node-version: '14'    
     - run: java -version
     - run: npm install -g apigeelint
-    - run: apigeelint -s $GITHUB_WORKSPACE/hr-api/apiproxy/ -f codeframe.js
+    - run: apigeelint -s  /home/runner/work/apigee-cicd/hr-api/apiproxy -f codeframe.js
