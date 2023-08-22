@@ -37,7 +37,7 @@ jobs:
       uses: 'google-github-actions/auth@v1'
       with:
         workload_identity_provider: 'projects/6560877506/locations/global/workloadIdentityPools/my-pool/providers/my-provider'
-        service_account: 'my-service-account@my-project.iam.gserviceaccount.com'
+        service_account: 'my-service-account@my-project-1489392491328.iam.gserviceaccount.com'
         token_format: 'access_token'
         access_token_lifetime: '300s'
     - run: |-
