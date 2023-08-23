@@ -31,6 +31,8 @@ jobs:
 
     steps:
     - uses: 'actions/checkout@v3'
+    - run: |-
+        echo '${{$GITHUB_WORKSPACE}}'
 
     - id: 'auth'
       name: 'Authenticate to Google Cloud'
