@@ -44,5 +44,17 @@ jobs:
         access_token_lifetime: '300s'
     - run: |-
         echo '${{ steps.auth.outputs.access_token }}'
-    - run: |-
-        "mvn -f "$GITHUB_WORKSPACE"/hr-api/pom.xml install -P eval  -Dbearer='${{ steps.auth.outputs.access_token }}' -Dapigee.config.options=update"
+    - uses: actions/setup-java@v3
+      with:
+          distribution: 'corretto' # See 'Supported distributions' for available options
+          java-version: '11'
+    - uses: actions/setup-node@v3
+      with:
+        node-version: '14'    
+    - run: java -version
+    - run: npm install -g apigeelint
+    - run: apigeelint -s  /home/runner/work/apigee-cicd/apigee-cicd/hr-api/apiproxy -f codeframe.js
+    - run: npm install
+    - run: npm test /home/runner/work/apigee-cicd/apigee-cicd/test/unit/*.js
+    - run: npm run coverage /home/runner/work/apigee-cicd/apigee-cicd/test/unit/*.j
+    - run: mvn -f "$GITHUB_WORKSPACE"/hr-api/pom.xml install -P eval  -Dbearer='${{ steps.auth.outputs.access_token }}' -Dapigee.config.options=update
