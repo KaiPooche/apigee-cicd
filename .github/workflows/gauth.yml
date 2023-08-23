@@ -43,4 +43,4 @@ jobs:
     - run: |-
         echo '${{ steps.auth.outputs.access_token }}'
     - run: |-
-        "mvn -f hr-api/pom.xml install -P eval  -Dbearer='${{ steps.auth.outputs.access_token }}' -Dapigee.config.options=update"
+        "mvn -f apigee-cicd/hr-api/pom.xml install -P eval  -Dbearer='${{ steps.auth.outputs.access_token }}' -Dapigee.config.options=update"
