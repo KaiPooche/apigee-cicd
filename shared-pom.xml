@@ -104,13 +104,13 @@
 <!-- This is where you add the environment specific properties under various profile names -->
  <profiles>
         <profile>
-            <id>dev</id>
+            <id>eval</id>
             <properties>
                 <apigee.profile>eval</apigee.profile>
                 <apigee.hosturl>https://apigee.googleapis.com</apigee.hosturl>
                 <apigee.apiversion>v1</apigee.apiversion>
                 <apigee.org>centering-river-396816</apigee.org>
-                <apigee.env>dev</apigee.env>
+                <apigee.env>eval</apigee.env>
                 <apigee.authtype>oauth</apigee.authtype> <!-- only option -->
                 <apigee.bearer>${bearer}</apigee.bearer> <!-- this takes precedence over service account file -->                
                 <apigee.serviceaccount.file>${file}</apigee.serviceaccount.file>
