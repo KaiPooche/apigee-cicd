@@ -6,6 +6,9 @@
         <Prefix/>
         <KeyFragment ref="request.uri" type="string"/>
     </CacheKey>
+    <ExpirySettings>
+        <TimeoutInSeconds>600</TimeoutInSeconds>
+    </ExpirySettings>
     <CacheResource>cicd-cache</CacheResource>
     <Scope>Exclusive</Scope>
     <SkipCacheLookup>(request.verb != "GET")</SkipCacheLookup>
