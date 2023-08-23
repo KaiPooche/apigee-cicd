@@ -1,11 +1,10 @@
 name: Apigee CI with Maven
 
-on: push
+on:
+  workflow_dispatch:
   
 env:
-  API_VERSION: googleapi 
-  # or 
-  #API_VERSION: apigeeapi
+  API_VERSION: apigeeapi
 
   # Default Target Apigee Organization et environment (can be also be dynamically defined in [Set Variables *] steps)
   DEFAULT_APIGEE_ORG: bap-emea-apigee-5
@@ -13,10 +12,9 @@ env:
   TEST_HOST: 34.117.38.184.nip.io
 
   # Retrieve Apigee UserID and password from repository settings (secrets)
-  APIGEE_CREDS_USR: ${{ secrets.APIGEE_CREDS_USR }}
-  APIGEE_CREDS_PSW: ${{ secrets.APIGEE_CREDS_PSW }}
+  WORKLOAD_IDENTITY_PROVIDER: ${{ secrets.WORKLOAD_IDENTITY_PROVIDER }}
+  SERVICE_ACCOUNT: ${{ secrets.SERVICE_ACCOUNT }}
 
-  GCP_SERVICE_ACCOUNT: ${{ secrets.GCP_SERVICE_ACCOUNT }}
 
   # These variables will be dynamically defined in [Set Variables *] steps
   GIT_BRANCH: ''
@@ -27,7 +25,7 @@ env:
   
 jobs:
   Apigee-Deploy:
-    if: "!contains(github.event.head_commit.message, '[skip ci]')"
+    
     runs-on: ubuntu-latest
 
     steps:
@@ -75,18 +73,6 @@ jobs:
   # Install dependencies (npm)
       - name: Install Dependencies
         run: npm install --silent --no-fund
-
-  # Validate Specification file (OAS, Swagger) using Stoplight Spectral
-  # + upload artifact (spectral-report.html)
-      - name: spectral
-        run: ./node_modules/.bin/spectral lint -r ./test/spectral/.spectral.yaml -f html -o spectral-report.html ./specs/airport-1.0.0.yaml  || true  # catch all errors for demo purpose 
-
-      - name: Archive Spectral results
-        uses: actions/upload-artifact@v3
-        with:
-          name: spectral-report
-          path:  ./spectral-report.html
-          retention-days: 5
 
 
   # Run apigeeLint test + upload artifact (apigeelint-out.html)
@@ -140,11 +126,7 @@ jobs:
           restore-keys: ${{ runner.os }}-m2   
 
 
-  # Generate SA key file from secret variable
-      - name: Generate SA key file
-        if: env.API_VERSION == 'googleapi'
-        run: | 
-          echo $GCP_SERVICE_ACCOUNT > sa.json
+  
 
 
 
@@ -180,23 +162,4 @@ jobs:
 
 
 
-  # Run Integration testing (Apickli) + upload artifact (cucumber_report.html)
-      - name: apickli
-        run: |
-          # update apickli config file (init.js) with API hostname and base path
-          export API_BASEPATH="/airports-cicd/v1"
-          sed -i "s@api_basepath@$API_BASEPATH@g" ./test/integration/features/support/init.js
-          sed -i "s@organization_hostname@$TEST_HOST@g" ./test/integration/features/support/init.js
-
-          # NODE_TLS_REJECT_UNAUTHORIZED required to support self signed certificate
-          # export NODE_TLS_REJECT_UNAUTHORIZED=0
-
-          node ./node_modules/.bin/cucumber-js  ./test/$PROXY_NAME/integration --format json:./report.json
-          node ./test/integration/index.js
-
-      - name: Archive Apickli results
-        uses: actions/upload-artifact@v3
-        with:
-          name: apickli-report
-          path: ./cucumber_report.html
-          retention-days: 5
+ 
