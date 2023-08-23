@@ -2,26 +2,40 @@ name: Apigee CI with Maven
 
 on:
   workflow_dispatch:
+
+    inputs:
+      Deployment Env:
+        # Friendly description to be shown in the UI instead of 'name'
+        description: 'Environment to deploy'
+        # Default value if no value is explicitly provided
+        default: 'Dev'
+        # Input has to be provided for the workflow to run
+        required: true
+        # The data type of the input
+        type: string
+      Deployment Org:
+        # Friendly description to be shown in the UI instead of 'name'
+        description: 'Org to deploy'
+        # Default value if no value is explicitly provided
+        default: 'Dev'
+        # Input has to be provided for the workflow to run
+        required: false
+        # The data type of the input
+        type: string
   
 env:
   API_VERSION: apigeeapi
 
   # Default Target Apigee Organization et environment (can be also be dynamically defined in [Set Variables *] steps)
   DEFAULT_APIGEE_ORG: bap-emea-apigee-5
-  DEFAULT_APIGEE_ENV: default-dev
-  TEST_HOST: 34.117.38.184.nip.io
+  DEFAULT_APIGEE_ENV: centering-river-396816
+  
 
-  # Retrieve Apigee UserID and password from repository settings (secrets)
+  # Retrieve GPC Workload Identity Provider and Service account from repository settings (secrets)
   WORKLOAD_IDENTITY_PROVIDER: ${{ secrets.WORKLOAD_IDENTITY_PROVIDER }}
   SERVICE_ACCOUNT: ${{ secrets.SERVICE_ACCOUNT }}
 
 
-  # These variables will be dynamically defined in [Set Variables *] steps
-  GIT_BRANCH: ''
-  AUTHOR_EMAIL: ''
-  APIGEE_ORG: ''
-  APIGEE_ENV: ''
-  APIGEE_DEPLOYMENT_SUFFIX: ''
   
 jobs:
   Apigee-Deploy:
@@ -31,29 +45,13 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
-  # Set Variables depending on branch
-      - name: Set Variables for [Main] branch
-        if: github.ref == 'refs/heads/main'
-        run: |
-          echo "AUTHOR_EMAIL=$(echo $GITHUB_ACTOR)" >> $GITHUB_ENV
-          echo "APIGEE_ORG=$(echo $DEFAULT_APIGEE_ORG)" >> $GITHUB_ENV
-          echo "APIGEE_ENV=$(echo $DEFAULT_APIGEE_ENV)" >> $GITHUB_ENV
-
-      - name: Set Variables for [Prod] branch
-        if: github.ref == 'refs/heads/prod'
-        run: |
-          echo "AUTHOR_EMAIL=$(echo $GITHUB_ACTOR)" >> $GITHUB_ENV
-          echo "APIGEE_ORG=$(echo $DEFAULT_APIGEE_ORG)" >> $GITHUB_ENV
-          echo "APIGEE_ENV=prod)" >> $GITHUB_ENV
-  
-      - name: Set Variables for branch not [Main], not [Prod]
-        if: github.ref != 'refs/heads/main' && github.ref != 'refs/heads/prod'
-        run: |
-          echo "APIGEE_DEPLOYMENT_SUFFIX=$(echo $GITHUB_REF | sed 's/.*\///')" >> $GITHUB_ENV
-          echo "AUTHOR_EMAIL=$(echo $GITHUB_ACTOR)" >> $GITHUB_ENV
-          echo "APIGEE_ORG=$(echo $DEFAULT_APIGEE_ORG)" >> $GITHUB_ENV
-          echo "APIGEE_ENV=$(echo $DEFAULT_APIGEE_ENV)" >> $GITHUB_ENV
-
+      - name: 'Authenticate to Google Cloud'
+        uses: 'google-github-actions/auth@v1'
+        with:
+            workload_identity_provider: 'projects/136304058176/locations/global/workloadIdentityPools/my-pool/providers/my-provider'
+            service_account: 'my-service-account@centering-river-396816.iam.gserviceaccount.com'
+            token_format: 'access_token'
+            access_token_lifetime: '300s'
 
   # Create Dependencies (npm) Cache 
       - name: Cache node modules
@@ -112,11 +110,11 @@ jobs:
 
 
   # Setup Maven & Maven Cache
-      - name: Set up JDK 1.8
+      - name: Set up JDK 1.11
         uses: actions/setup-java@v3
         with:
-          distribution: 'temurin' 
-          java-version: 8
+          distribution: 'corretto' 
+          java-version: 11
 
       - name: Cache the Maven packages to speed up build
         uses: actions/cache@v3
@@ -152,12 +150,7 @@ jobs:
       - name: mvn config
         run: mvn apigee-enterprise:configure -q -P$API_VERSION -Dorg=$APIGEE_ORG -Denv=$APIGEE_ENV  -Ddeployment.suffix=$APIGEE_DEPLOYMENT_SUFFIX 
 
-      - name: mvn deploy proxy edge
-        if: env.API_VERSION == 'apigeeapi'
-        run: mvn apigee-enterprise:deploy -q -Papigeeapi -Dorg=$APIGEE_ORG -Denv=$APIGEE_ENV -Dpassword=$APIGEE_CREDS_PSW -Dusername=$APIGEE_CREDS_USR -Ddeployment.suffix=$APIGEE_BUILD_DEPLOYMENT_SUFFIX 
-
-      - name: mvn deploy proxy xhybrid
-        if: env.API_VERSION == 'googleapi'
+      - name: mvn deploy proxy apigee
         run: mvn apigee-enterprise:deploy -q -Pgoogleapi -Denv=$APIGEE_ENV -Dsa=sa.json -Dorg=$APIGEE_ORG -Ddeployment.suffix=$APIGEE_BUILD_DEPLOYMENT_SUFFIX 
 
 
