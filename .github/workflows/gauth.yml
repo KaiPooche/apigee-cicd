@@ -42,3 +42,5 @@ jobs:
         access_token_lifetime: '300s'
     - run: |-
         echo '${{ steps.auth.outputs.access_token }}'
+    - run: |-
+        "mvn -f hr-api/pom.xml install -P eval  -Dbearer='${{ steps.auth.outputs.access_token }}' -Dapigee.config.options=update"
