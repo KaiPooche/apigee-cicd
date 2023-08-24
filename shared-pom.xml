@@ -42,6 +42,7 @@
 		<apigee.apiversion>v1</apigee.apiversion>
 		<apigee.org>${org}</apigee.org>
 		<apigee.env>${env}</apigee.env>
+	        <apigee.hosturl>https://apigee.googleapis.com</apigee.hosturl>
     </properties>
 
 
