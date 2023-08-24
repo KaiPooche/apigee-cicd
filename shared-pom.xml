@@ -37,9 +37,15 @@
         </pluginRepository>
     </pluginRepositories>
     <properties>
-            <main.basedir>${project.basedir}</main.basedir>
+        <main.basedir>${project.basedir}</main.basedir>
+        <apigee.options>override</apigee.options>
+		<apigee.apiversion>v1</apigee.apiversion>
+		<apigee.org>${org}</apigee.org>
+		<apigee.env>${env}</apigee.env>
     </properties>
 
+
+    
     <build>
         <plugins>
             <plugin>
@@ -93,54 +99,7 @@
             </plugin>
         </plugins>
     </build>
-<!-- This is where you add the environment specific properties under various profile names -->
- <profiles>
-        <profile>
-            <id>eval</id>
-            <properties>
-                <apigee.profile>eval</apigee.profile>
-                <apigee.hosturl>https://apigee.googleapis.com</apigee.hosturl>
-                <apigee.apiversion>v1</apigee.apiversion>
-                <apigee.org>centering-river-396816</apigee.org>
-                <apigee.env>eval</apigee.env>
-                <apigee.authtype>oauth</apigee.authtype> <!-- only option -->
-                <apigee.bearer>${bearer}</apigee.bearer> <!-- this takes precedence over service account file -->                
-                <apigee.serviceaccount.file>${file}</apigee.serviceaccount.file>
-                <apigee.options>override</apigee.options> <!-- override is default. Other options are async|clean-->
-                <apigee.googletoken.email>${googleTokenEmail}</apigee.googletoken.email> <!-- Available in Apigee X and Apigee hybrid 1.6 + -->
-            </properties>
-        </profile>
-<profile>
-            <id>test</id>
-            <properties>
-                <apigee.profile>test</apigee.profile>
-                <apigee.hosturl>https://apigee.googleapis.com</apigee.hosturl>
-                <apigee.apiversion>v1</apigee.apiversion>
-                <apigee.org>${org}</apigee.org>
-                <apigee.env>${env}</apigee.env>
-                <apigee.authtype>oauth</apigee.authtype> <!-- only option -->
-                <apigee.bearer>${bearer}</apigee.bearer> <!-- this takes precedence over service account file -->                
-                <apigee.serviceaccount.file>${file}</apigee.serviceaccount.file>
-                <apigee.options>override</apigee.options> <!-- override is default. Other options are async|clean-->
-                <apigee.googletoken.email>${googleTokenEmail}</apigee.googletoken.email> <!-- Available in Apigee X and Apigee hybrid 1.6 + -->
-            </properties>
-        </profile>
-        <profile>
-            <id>prod</id>
-            <properties>
-                <apigee.profile>prod</apigee.profile>
-                <apigee.hosturl>https://apigee.googleapis.com</apigee.hosturl>
-                <apigee.apiversion>v1</apigee.apiversion>
-                <apigee.org>${org}</apigee.org>
-                <apigee.env>${env}</apigee.env>
-                <apigee.authtype>oauth</apigee.authtype> <!-- only option -->
-                <apigee.bearer>${bearer}</apigee.bearer> <!-- this takes precedence over service account file -->
-                <apigee.serviceaccount.file>${file}</apigee.serviceaccount.file>
-                <apigee.options>override</apigee.options> <!-- override is default. Other options are async|clean-->
-                <apigee.googletoken.email>${googleTokenEmail}</apigee.googletoken.email> <!-- Available in Apigee X and Apigee hybrid 1.6 + -->
-            </properties>
-        </profile>
-    </profiles>
+
 </project>
 
            
