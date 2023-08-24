@@ -123,7 +123,7 @@ jobs:
       #  run: mvn apigee-enterprise:configure -q -P$API_VERSION -Denv=$APIGEE_ENV  -Ddeployment.suffix=$APIGEE_DEPLOYMENT_SUFFIX 
 
       - name: mvn deploy proxy apigee
-        run: mvn -f "$GITHUB_WORKSPACE"/hr-api/pom.xml install -Dapigee.org=${{ github.event.inputs.deployment-org }} -Denv=${{ github.event.inputs.deployment-env}}  -Dbearer='${{ steps.auth.outputs.access_token }}' -Dapigee.config.options=update
+        run: mvn -f "$GITHUB_WORKSPACE"/hr-api/pom.xml install -Dbearer='${{ steps.auth.outputs.access_token }}' -Dapigee.org=${{ github.event.inputs.deployment-org }} -Denv=${{ github.event.inputs.deployment-env}}  -Dapigee.config.options=update
 
 
 
