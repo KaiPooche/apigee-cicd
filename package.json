@@ -17,18 +17,10 @@
       "lint": "./node_modules/apigeelint/cli.js -s ./apiproxy -f html.js -e PO013"
     },
     "dependencies": {
-      "cucumber-html-reporter": "latest",
-      "apickli": "^3.0.1",
       "apigeelint": "^2.13.0",
-      "@cucumber/cucumber": "^7.3.0",
-      "eslint": "^7.0.0",
-      "eslint-config-google": "^0.14.0",
-      "eslint-config-prettier": "^6.11.0",
+      "@cucumber/cucumber": "^7.3.0",  
       "jsonpath-plus": "^5.0.7",
-      "prettier": "^2.0.5",
-      "mocha": "^7.2.0",
-      "nyc": "^15.0.1",
-      "sinon": "^9.0.2", 
-      "@stoplight/spectral": "latest"
+      "prettier": "^2.0.5"
+      
     }
   }
