@@ -130,19 +130,19 @@ jobs:
 
   # Deploy Apigee Config (Apigee [Config] Maven plugin)
       
-      - name: mvn deploy config
-        run:  mvn install -q -P$APIGEE_ENV -Dapigee.org=$APIGEE_ORG -Denv=$APIGEE_ENV -Dsa=sa.json -Dapigee.config.file=./EdgeConfig/edge.json -Dapigee.config.options=update
+     # - name: mvn deploy config
+      #  run:  mvn install -q -P$APIGEE_ENV -Dapigee.org=$APIGEE_ORG -Denv=$APIGEE_ENV -Dsa=sa.json -Dapigee.config.file=./EdgeConfig/edge.json -Dapigee.config.options=update
 
 
   # Package & Deploy Apigee proxy (Apigee [Deploy] Maven plugin)
       - name: mvn package
-        run: mvn process-resources -P$API_VERSION -Dcommit=$GIT_COMMIT -Dbranch=$GIT_BRANCH -Dauthor=$AUTHOR_EMAIL -Ddeployment.suffix=$APIGEE_DEPLOYMENT_SUFFIX
+        run: mvn process-resource
 
-      - name: mvn config
-        run: mvn apigee-enterprise:configure -q -P$API_VERSION -Dorg=$APIGEE_ORG -Denv=$APIGEE_ENV  -Ddeployment.suffix=$APIGEE_DEPLOYMENT_SUFFIX 
+     # - name: mvn config
+      #  run: mvn apigee-enterprise:configure -q -P$API_VERSION -Denv=$APIGEE_ENV  -Ddeployment.suffix=$APIGEE_DEPLOYMENT_SUFFIX 
 
       - name: mvn deploy proxy apigee
-        run: mvn apigee-enterprise:deploy -q -Pgoogleapi -Denv=$APIGEE_ENV -Dsa=sa.json -Dorg=$APIGEE_ORG -Ddeployment.suffix=$APIGEE_BUILD_DEPLOYMENT_SUFFIX 
+        run: mvn -f "$GITHUB_WORKSPACE"/hr-api/pom.xml install -P eval  -Dbearer='${{ steps.auth.outputs.access_token }}' -Dapigee.config.options=update
 
 
 
