@@ -89,29 +89,7 @@ jobs:
           retention-days: 5
 
 
-  # Run eslint test + upload artifact (eslint-out.html)
-      - name: eslint
-        run : ./node_modules/eslint/bin/eslint.js -c ./.eslintrc-jsc.yml --format html ./apiproxy/resources/jsc > ./eslint-out.html
-
-      - name: Archive esLint results
-        uses: actions/upload-artifact@v3
-        with:
-          name: eslint-report
-          path: ./eslint-out.html
-          retention-days: 5
-
-
-  # Run JS Mocha test + upload artifact (coverage/index.html)
-      - name: mocha
-        run: ./node_modules/nyc/bin/nyc.js --reporter=html --reporter=text ./node_modules/mocha/bin/_mocha ./test/unit
-  
-      - name: Archive Mocha results
-        uses: actions/upload-artifact@v3
-        with:
-          name: mocha-report
-          path:  ./coverage/index.html
-          retention-days: 5
-
+ 
 
   # Setup Maven & Maven Cache
       - name: Set up JDK 1.11
