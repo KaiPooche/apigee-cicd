@@ -117,8 +117,8 @@ jobs:
 
 
   # Package & Deploy Apigee proxy (Apigee [Deploy] Maven plugin)
-      - name: mvn package
-        run: mvn process-resource
+    #  - name: mvn package
+     #   run: mvn process-resource
 
      # - name: mvn config
       #  run: mvn apigee-enterprise:configure -q -P$API_VERSION -Denv=$APIGEE_ENV  -Ddeployment.suffix=$APIGEE_DEPLOYMENT_SUFFIX 
