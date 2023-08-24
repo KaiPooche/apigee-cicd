@@ -1,28 +1,85 @@
 {
-    "configurations": [
-        {
-            "name": "eval",
-            "policies": [],
-            "proxies": [],
-            "targets": []
-        },
-        {
-            "name": "uat",
-            "policies": [],
-            "proxies": [],
-            "targets": []
-        },
-        {
-            "name": "dev",
-            "policies": [],
-            "proxies": [],
-            "targets": []
-        },
-        {
-            "name": "test",
-            "policies": [],
-            "proxies": [],
-            "targets": []
+    "version": "1.0",
+    "envConfig": {
+        "eval": {
+          "targetServers": [
+              {
+                "name" : "cicd-target-server",
+                "host" : "test-eval-prod.apigee.net",
+                "isEnabled" : true,
+                "port" : 80
+              }
+          ],
+          "virtualHosts": [],
+          
+          "kvms": [
+                {
+                    "name": "cicd-kvm-credentials",
+                    "entry": [
+                        {
+                            "name": "username",
+                            "value": "username"
+                        },
+                        {
+                            "name": "password",
+                            "value": "password"
+                        }
+                    ]
+                }
+            ],
+          "resourcefiles":[],
+          "flowhooks":[]
         }
-    ]
+    },
+    "orgConfig": {
+        "apiProducts": [
+            {
+                "name": "Cicd-Prod-Product",
+                "apiResources": [
+                    "/",
+                    "/**"
+                ],
+                "approvalType": "auto",
+                "attributes": [
+                    {
+                        "name": "description",
+                        "value": "Testing CICD"
+                    }
+                ],
+                "description": "Testing CICD",
+                "displayName": "Cicd-Prod-Product",
+                "environments": [
+                    "prod"
+                ],
+                "proxies": [
+                    "HR-API",
+                    "CiCd-Security"
+                ],
+                "quota": "100000000",
+                "quotaInterval": "1",
+                "quotaTimeUnit": "minute",
+                "scopes": []
+            }        
+        ],
+        "developers": [
+            {
+                "email": "hr@api.com",
+                "firstName": "HR",
+                "lastName": "JOHN",
+                "userName": "JohnSeen",
+                "attributes": []
+            }
+        ],
+        "developerApps": {
+            "hr@api.com": [
+                {
+                    "name": "hrapp",
+                    "apiProducts": [ "Cicd-Prod-Product" ],
+                    "callbackUrl": "http://hr.com",
+                    "scopes": []
+                }
+            ]
+        }
+    }
+       
 }
