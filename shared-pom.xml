@@ -101,6 +101,20 @@
         </plugins>
     </build>
 
+	<profiles>
+        <profile>
+            <id>eval</id>
+            <properties>
+                <apigee.profile>eval</apigee.profile>
+                <apigee.hosturl>https://apigee.googleapis.com</apigee.hosturl>
+                <apigee.apiversion>v1</apigee.apiversion>
+                <apigee.org>centering-river-396816</apigee.org>
+                <apigee.env>eval</apigee.env>
+                
+            </properties>
+        </profile>
+	</profiles>
+
 </project>
 
            
