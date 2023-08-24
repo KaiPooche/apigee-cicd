@@ -4,20 +4,20 @@ on:
   workflow_dispatch:
 
     inputs:
-      Deployment Env:
+      deployment-env:
         # Friendly description to be shown in the UI instead of 'name'
         description: 'Environment to deploy'
         # Default value if no value is explicitly provided
-        default: 'Dev'
+        default: 'eval'
         # Input has to be provided for the workflow to run
         required: true
         # The data type of the input
         type: string
-      Deployment Org:
+      deployment-org:
         # Friendly description to be shown in the UI instead of 'name'
         description: 'Org to deploy'
         # Default value if no value is explicitly provided
-        default: 'Dev'
+        default: 'centering-river-396816'
         # Input has to be provided for the workflow to run
         required: false
         # The data type of the input
@@ -26,9 +26,7 @@ on:
 env:
 
 
-  # Default Target Apigee Organization et environment (can be also be dynamically defined in [Set Variables *] steps)
-  DEFAULT_APIGEE_ORG: centering-river-396816
-  DEFAULT_APIGEE_ENV: Dev
+  
   
 
   # Retrieve GPC Workload Identity Provider and Service account from repository settings (secrets)
@@ -125,7 +123,7 @@ jobs:
       #  run: mvn apigee-enterprise:configure -q -P$API_VERSION -Denv=$APIGEE_ENV  -Ddeployment.suffix=$APIGEE_DEPLOYMENT_SUFFIX 
 
       - name: mvn deploy proxy apigee
-        run: mvn -f "$GITHUB_WORKSPACE"/hr-api/pom.xml install -P eval  -Dbearer='${{ steps.auth.outputs.access_token }}' -Dapigee.config.options=update
+        run: mvn -f "$GITHUB_WORKSPACE"/hr-api/pom.xml install -Dapigee.org=${{ github.event.inputs.deployment-org }} -Denv=${{ github.event.inputs.deployment-env}}  -Dbearer='${{ steps.auth.outputs.access_token }}' -Dapigee.config.options=update
 
 
 
