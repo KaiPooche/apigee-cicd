@@ -27,8 +27,8 @@ env:
   API_VERSION: apigeeapi
 
   # Default Target Apigee Organization et environment (can be also be dynamically defined in [Set Variables *] steps)
-  DEFAULT_APIGEE_ORG: bap-emea-apigee-5
-  DEFAULT_APIGEE_ENV: centering-river-396816
+  DEFAULT_APIGEE_ORG: centering-river-396816
+  DEFAULT_APIGEE_ENV: Dev
   
 
   # Retrieve GPC Workload Identity Provider and Service account from repository settings (secrets)
